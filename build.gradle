@@ -16,7 +16,7 @@
 
 buildscript {
     ext.kotlin_version = '1.4.31'
-    ext.compose_version = '1.0.0-beta02'
+    ext.compose_version = '1.0.0-beta03'
     ext.coroutines_version = '1.4.2'
 
     repositories {
@@ -25,7 +25,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0-alpha11'
+        classpath 'com.android.tools.build:gradle:7.0.0-alpha12'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         classpath "com.squareup.sqldelight:gradle-plugin:$sqlDelightVersion"
@@ -52,9 +52,9 @@ subprojects {
     apply plugin: 'com.diffplug.spotless'
     spotless {
         kotlin {
-            target '**/*.kt'
-            targetExclude("$buildDir/**/*.kt")
-            targetExclude('bin/**/*.kt')
+//            target '**/*.kt'
+//            targetExclude("$buildDir/**/*.kt")
+//            targetExclude('bin/**/*.kt')
 
             ktlint("0.40.0")
             licenseHeaderFile rootProject.file('spotless/copyright.kt')

@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
+
 val coroutinesVersion = "1.3.9-native-mt"
 val serializationVersion = "1.0.0-RC"
 val ktorVersion = "1.4.0"
@@ -32,6 +33,14 @@ kotlin {
             }
         }
     }
+
+    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
+    if (onPhone) {
+        iosArm64("ios")
+    } else {
+        iosX64("ios")
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -40,7 +49,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
-            }
+                }
         }
         val androidMain by getting {
             dependencies {
@@ -58,6 +67,13 @@ kotlin {
     }
 }
 
+sqldelight {
+    database("AppDatabase") {
+        packageName = "com.kashwaa.shared.cache"
+        name = "AppDatabase"
+    }
+}
+
 android {
     compileSdkVersion(30)
     defaultConfig {
@@ -65,6 +81,7 @@ android {
         targetSdkVersion(30)
     }
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    buildToolsVersion = "31.0.0 rc2"
 }
 
 val packForXcode by tasks.creating(Sync::class) {

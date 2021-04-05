@@ -1,8 +1,8 @@
 //
 //  RemoteImage.swift
-//  cat_adoptioniOS
+//  catBreedsIOS
 //
-//  Created by Mostafa Kashwaa on 23/03/2021.
+//  Created by Mostafa Kashwaa on 27/03/2021.
 //
 
 import SwiftUI
@@ -18,7 +18,8 @@ struct RemoteImage: View {
 
         init(url: String) {
             guard let parsedURL = URL(string: url) else {
-                fatalError("Invalid URL: \(url)")
+//                fatalError("Invalid URL: \(url)")
+                return
             }
 
             URLSession.shared.dataTask(with: parsedURL) { data, response, error in

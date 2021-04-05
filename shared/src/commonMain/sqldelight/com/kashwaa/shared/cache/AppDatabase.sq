@@ -1,0 +1,49 @@
+import kotlin.collections.List;
+import com.kashwaa.shared.domain.Range;
+
+CREATE TABLE breedEntity (
+     id TEXT NOT NULL PRIMARY KEY,
+     name TEXT NOT NULL,
+     description TEXT NOT NULL,
+     weight TEXT AS Range<Int>,
+     adaptability INTEGER AS Int,
+     temperament TEXT AS List<String>,
+     lifeSpan TEXT AS Range<Int>,
+     origin TEXT,
+     hypoallergenic INTEGER AS Int,
+     experimental INTEGER AS Boolean DEFAULT 0,
+     rare INTEGER AS Boolean DEFAULT 0,
+     indoor INTEGER AS Boolean DEFAULT 0,
+     natural INTEGER AS Boolean DEFAULT 0,
+     shortLegs INTEGER AS Boolean DEFAULT 0,
+     hairless INTEGER AS Boolean DEFAULT 0,
+     suppressedTail INTEGER AS Boolean DEFAULT 0,
+     lap INTEGER AS Int,
+     affectionLevel INTEGER AS Int,
+     childFriendly INTEGER AS Int,
+     strangerFriendly INTEGER AS Int,
+     dogFriendly INTEGER AS Int,
+     energyLevel INTEGER AS Int,
+     grooming INTEGER AS Int,
+     intelligence INTEGER AS Int,
+     healthIssues INTEGER AS Int,
+     socialNeeds INTEGER AS Int,
+     vocalisation INTEGER AS Int,
+     hairShedding INTEGER AS Int,
+     altNames TEXT AS List<String>,
+     wikipediaUrl TEXT,
+     cfaUrl TEXT,
+     vcaUrl TEXT,
+     vetStreetUrl TEXT,
+     image_url TEXT
+);
+
+getAll:
+SELECT * FROM breedEntity;
+
+insert:
+INSERT INTO breedEntity
+VALUES ?;
+
+clear:
+DELETE FROM breedEntity;

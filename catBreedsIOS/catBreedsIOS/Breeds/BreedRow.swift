@@ -1,8 +1,8 @@
 //
 //  BreedRow.swift
-//  cat_adoptioniOS
+//  catBreedsIOS
 //
-//  Created by Mostafa Kashwaa on 23/03/2021.
+//  Created by Mostafa Kashwaa on 27/03/2021.
 //
 
 import SwiftUI
@@ -13,7 +13,7 @@ struct BreedRow: View {
     
     var body: some View {
         HStack {
-            RemoteImage(url: breed.imageUrl)
+            RemoteImage(url: breed.image?.url ?? "")
                 .frame(width: 50, height: 50)
                 .cornerRadius(5)
             VStack(alignment: .leading) {
@@ -28,6 +28,6 @@ struct BreedRow: View {
 
 struct BreedRow_Previews: PreviewProvider {
     static var previews: some View {
-        BreedRow(breed: PetDummyRepository().getAllBreeds()[0])
+        BreedRow(breed: TheCatApi.Companion().getSampleBreed().toDomain(unitSystem: BreedDTO.UnitSystemMetric()))
     }
 }
