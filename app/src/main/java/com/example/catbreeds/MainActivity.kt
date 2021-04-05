@@ -54,7 +54,6 @@ import dev.chrisbanes.accompanist.insets.statusBarsPadding
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("MainActivity", "onCreate: ${Greeting().greeting()}")
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             window.statusBarColor = Color.Black.copy(alpha = 0.4f).toArgb()
@@ -82,8 +81,11 @@ fun MyApp() {
         Scaffold(
             topBar = {
                 AppTopBar(
-                    title = "Cat Adoption"
-                ) { navHostController.navigate(Screen.Home.route) }
+                    title = "Cat Breeds"
+                ) { navHostController.navigate(Screen.Home.route) {
+                    popUpTo = navHostController.graph.startDestination
+                    launchSingleTop = true
+                } }
             }
         ) {
             AppNavHost(navController = navHostController)
@@ -106,7 +108,7 @@ fun AppTopBar(title: String, onAppBarIconClick: () -> Unit) {
                 contentDescription = "",
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
-                    .height(45.dp)
+                    .height(40.dp)
                     .clickable { onAppBarIconClick() }
             )
         }
