@@ -42,7 +42,7 @@ getAll:
 SELECT * FROM breedEntity;
 
 insert:
-INSERT INTO breedEntity
+INSERT OR REPLACE INTO breedEntity
 VALUES ?;
 
 clear:

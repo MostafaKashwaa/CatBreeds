@@ -7,11 +7,11 @@ import com.kashwaa.shared.netwok.toDomain
 class BreedRepoRemote: BreedRepo {
     val api = TheCatApi()
     override suspend fun getAllBreeds(): List<Breed> {
-        return api.getAllBreeds().toDomain()
+        return api.getAllBreeds()
     }
 
     override suspend fun getBreedsPage(page: Int): List<Breed> {
-        return api.getBreedsPage(page).toDomain()
+        return api.getBreedsPage(page)
     }
 
     override suspend fun getBreed(id: String): Breed {

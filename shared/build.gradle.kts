@@ -1,10 +1,13 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.konan.properties.propertyString
 
 
 val coroutinesVersion = "1.3.9-native-mt"
 val serializationVersion = "1.0.0-RC"
 val ktorVersion = "1.4.0"
 val sqlDelightVersion: String by project
+val cat_api_key: String = gradleLocalProperties(rootDir).propertyString("CAT_API_KEY")!!
 
 plugins {
     kotlin("multiplatform")
@@ -22,6 +25,13 @@ android {
         create("testDebugApi")
         create("testReleaseApi")
     }
+    compileSdkVersion(30)
+    defaultConfig {
+        minSdkVersion(23)
+        targetSdkVersion(30)
+    }
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    buildToolsVersion = "31.0.0 rc2"
 }
 
 kotlin {
@@ -72,16 +82,6 @@ sqldelight {
         packageName = "com.kashwaa.shared.cache"
         name = "AppDatabase"
     }
-}
-
-android {
-    compileSdkVersion(30)
-    defaultConfig {
-        minSdkVersion(23)
-        targetSdkVersion(30)
-    }
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    buildToolsVersion = "31.0.0 rc2"
 }
 
 val packForXcode by tasks.creating(Sync::class) {

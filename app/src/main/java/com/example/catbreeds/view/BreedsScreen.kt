@@ -23,10 +23,10 @@ fun BreedsScreen(
 ) {
     val breeds = viewModel.breeds
     Box(Modifier.fillMaxSize()) {
-        when (viewModel.loading) {
+        when (viewModel.status) {
             BreedsViewModel.Status.Loading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
             BreedsViewModel.Status.Success -> BreedsVerticalGrid(items = breeds, onBreedClick = onBreedClick, 2)
-            else -> ErrorPage(viewModel::onLoadBreeds)
+            else -> ErrorPage(retry = viewModel::onLoadBreeds)
         }
     }
 }
