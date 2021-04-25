@@ -1,6 +1,5 @@
 package com.example.catbreeds.view.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
@@ -9,7 +8,11 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -24,7 +27,6 @@ fun PreviewBox(
     imageUrl: String
 ) {
     BoxWithGestures {
-        Log.i("Compose", "PreviewBox: recomposed with scale = $scale & translate = $translate")
         CoilImage(
             data = imageUrl,
             contentDescription = null,
@@ -45,7 +47,6 @@ fun PreviewBox(
                                 else -> 3f
                             }
                             translate = Offset(0f, 0f)
-                            Log.i("Compose", "PreviewBox: Scale after doubleTab is: $scale")
                         }
                     )
                 }
@@ -56,8 +57,8 @@ fun PreviewBox(
 }
 
 @Composable
-fun BoxWithGestures(
-    content: @Composable GesturesBoxScope.() -> Unit
+inline fun BoxWithGestures(
+    crossinline content: @Composable GesturesBoxScope.() -> Unit
 ) {
     var scale by remember { mutableStateOf(1f) }
     var translate by remember { mutableStateOf(Offset(0f, 0f)) }
@@ -92,14 +93,13 @@ fun BoxWithGestures(
                     }
                 }
         ) {
-            Log.i("Compose", "BoxWithGestures: Box recomposed with scale: $scale")
             val scope = GesturesBoxScope(
                 scaleValue = scale,
                 translateValue = translate,
                 onScaleChange = { scale = it },
-                onTranslateChange = { translate = it }
+                onTranslateChange = { translate = it },
+                this
             )
-            Log.i("Compose", "BoxWithGestures: scope scale changed to ${scope.scale}")
             scope.content()
         }
     }
@@ -109,19 +109,18 @@ data class GesturesBoxScope(
     private var scaleValue: Float,
     private var translateValue: Offset,
     private val onScaleChange: (Float) -> Unit,
-    private val onTranslateChange: (Offset) -> Unit
-) : BoxScope {
+    private val onTranslateChange: (Offset) -> Unit,
+    private val scope: BoxScope
+) : BoxScope by scope {
     var scale: Float
         get() = scaleValue
         set(value) {
-            Log.i("Compose", "Scope: Scale changed to $scale")
             onScaleChange(value)
             scaleValue = value
         }
     var translate: Offset
         get() = translateValue
         set(value) {
-            Log.i("Compose", "Scope: translate changed to $translate")
             onTranslateChange(value)
             translateValue = value
         }

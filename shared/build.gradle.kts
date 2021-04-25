@@ -5,9 +5,9 @@ import org.jetbrains.kotlin.konan.properties.propertyString
 
 val coroutinesVersion = "1.3.9-native-mt"
 val serializationVersion = "1.0.0-RC"
-val ktorVersion = "1.4.0"
+val ktorVersion = "1.5.3"
 val sqlDelightVersion: String by project
-val cat_api_key: String = gradleLocalProperties(rootDir).propertyString("CAT_API_KEY")!!
+val catApiKey: String = gradleLocalProperties(rootDir).propertyString("CAT_API_KEY")!!
 
 plugins {
     kotlin("multiplatform")
@@ -32,6 +32,10 @@ android {
     }
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     buildToolsVersion = "31.0.0 rc2"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 }
 
 kotlin {

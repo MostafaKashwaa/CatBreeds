@@ -21,15 +21,15 @@ class TheCatApi {
         }
     }
 
-    var pageSize = 10
+    var defaultPageSize = 10
 
     suspend fun getAllBreeds(): List<Breed> {
         val breeds: List<BreedDTO> = httpClient.get("$BASE_URL/breeds") {}
         return breeds.toDomain()
     }
 
-    suspend fun getBreedsPage(page: Int): List<Breed> {
-        val breeds: List<BreedDTO> = httpClient.get("$BASE_URL/breeds?limit=$pageSize&page=$page")
+    suspend fun getBreedsPage(page: Int, pageSize: Int = defaultPageSize): List<Breed> {
+        val breeds: List<BreedDTO> = httpClient.get("$BASE_URL/breeds?limit=$defaultPageSize&page=$page")
         return breeds.toDomain()
     }
 
